@@ -1,0 +1,95 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+<h:head>
+    <title>Student Class</title>
+</h:head>
+<h:body>
+        
+<h:form id="form">
+ 	
+ 	<p:growl id="msgs" showDetail="true"/>
+ 
+    <p:dataTable  id="dataTable" var="student" value="#{dtView.students}" sortMode="multiple" widgetVar="studentsTable"
+                 emptystudent="No students found with given criteria" filteredValue="#{dtView.filteredStudents}" editable="true"
+                 rowKey="#{student.id}" selectionMode="single">
+
+        <f:facet name="header">
+            <p:outputPanel>
+                <h:outputText value="Search all fields:" />
+                <p:inputText id="globalFilter" onkeyup="PF('studentsTable').filter()" style="width:150px" placeholder="Enter keyword"/>
+            </p:outputPanel>
+        </f:facet>
+
+		<p:ajax event="rowEdit" listener="#{dtView.onRowEdit}" update=":form:msgs" />
+        <p:ajax event="rowEditCancel" listener="#{dtView.onRowCancel}" update=":form:msgs" />
+        
+        <p:column filterBy="#{student.id}" headerText="Id" sortBy="#{student.id}">
+            <h:outputText value="#{student.id}" />
+        </p:column>
+        
+                
+        <p:column filterBy="#{student.firstName}" headerText="FirstName" sortBy="#{student.firstName}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{student.firstName}" /></f:facet>
+                <f:facet name="input"><p:inputText id="modelInputf" value="#{student.firstName}" style="width:100%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+ 
+        <p:column  filterBy="#{student.lastName}" headerText="LastName" sortBy="#{student.lastName}">
+            <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{student.lastName}" /></f:facet>
+                <f:facet name="input"><p:inputText id="modelInputl" value="#{student.lastName}" style="width:100%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+ 
+        <p:column filterBy="#{student.mail}" headerText="E-Mail" sortBy="#{student.mail}">
+             <p:cellEditor>
+                <f:facet name="output"><h:outputText value="#{student.mail}" /></f:facet>
+                <f:facet name="input"><p:inputText id="modelInputm" value="#{student.mail}" style="width:100%"/></f:facet>
+            </p:cellEditor>
+        </p:column>
+                
+        <p:column style="width:35px">
+            <p:rowEditor />
+        </p:column>
+        
+        <p:column style="width:32px;text-align: center">
+             <p:commandButton icon="ui-icon-trash" title="Delete">
+                <f:setPropertyActionListener value="#{student}" target="#{dtView.deleteStudent}" />
+            </p:commandButton>
+        </p:column>
+    </p:dataTable>
+
+
+    <p:commandButton value="Add Student" icon="pi pi-check" oncomplete="PF('dlg').show()" />
+      
+     
+    <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+    
+        <p:dialog header="Add" widgetVar="dlg" resizable="false" modal="true">
+        <h:panelGrid columns="2" cellpadding="5">
+        
+            <h:outputLabel for="destinatair" value="FirstName:" />
+            <p:inputText id="destinatair" value="#{addStudentView.firstName}" required="true" label="firstName" />
+             
+              <h:outputLabel for="date" value="LastName:" />
+            <p:inputText id="date" value="#{addStudentView.lastName}" required="true" label="lastName" />
+             
+            <h:outputLabel for="text" value="E-Mail:" />
+            <p:inputText id="text" value="#{addStudentView.mail}" required="true" label="mail" />
+             
+            <f:facet name="footer">
+                <p:commandButton value="Add" action="#{addStudentView.add}" oncomplete="PF('dlg').hide()" update="dataTable"/>       
+            </f:facet>  
+            
+        </h:panelGrid>
+    </p:dialog> 
+         
+</h:form>
+
+</h:body>
+</html>

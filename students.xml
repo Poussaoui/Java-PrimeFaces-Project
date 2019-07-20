@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<students>
+  <student id="1">
+    <firstName>Marc</firstName>
+    <lastName>Julie</lastName>
+    <mail>Marc@Julie.com</mail>
+  </student>
+  <student id="2">
+    <firstName>Robert</firstName>
+    <lastName>Didier</lastName>
+    <mail>Robert@Didier.com</mail>
+  </student>
+  <student id="3">
+    <firstName>Jacques</firstName>
+    <lastName>Marc</lastName>
+    <mail>Jacques@Marc.com</mail>
+  </student>
+  <student id="4">
+    <firstName>uuuhjh</firstName>
+    <lastName>yyyyhjg</lastName>
+    <mail>tttrrrrrghj</mail>
+  </student>
+</students>
